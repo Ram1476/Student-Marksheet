@@ -91,13 +91,33 @@ namespace Student_Marksheet
 
         }
 
+        private void txtTot_TextChanged(object sender, EventArgs e)
+        {
+            int math = 0;
+            int sci = 0;
+            int eng = 0;
+
+            stud1 = new StudentDetails();
+            int.TryParse(txtmath.Text, out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            txtPer.Text = (math + sci + eng).ToString();
+            stud1 = null;
+
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
+            stud1  =  new StudentDetails();
+
             stud1.rollNum = Convert.ToInt32(txtRollno.Text);
             stud1.maths = Convert.ToInt32(txtmath.Text);
             stud1.science = Convert.ToInt32(txtsci.Text);
             stud1.english = Convert.ToInt32(txteng.Text);
             stud1.name = txtname.Text;
+            txtPer.Text = Math.Round((stud1.percentage),2).ToString();
+            txtTot.Text = stud1.total.ToString();
+            txtGd.Text = stud1.grade;
             if (Stud2.CreateStudent(stud1)) 
             {
                 MessageBox.Show("Student Data Successfully Created");
@@ -106,9 +126,7 @@ namespace Student_Marksheet
             {
                 MessageBox.Show("Student Data Not created ");
             }
-            txtPer.Text = Math.Round((stud1.percentage),2).ToString();
-            txtTot.Text = stud1.total.ToString();
-            txtGd.Text = stud1.grade;
+           
  
         }
 
@@ -178,19 +196,5 @@ namespace Student_Marksheet
             }
         }
 
-        private void txtTot_TextChanged(object sender, EventArgs e)
-        {
-            int math = 0;
-            int sci = 0;
-            int eng = 0;
-
-            stud1 = new StudentDetails();
-            int.TryParse(txtmath.Text, out math);
-            int.TryParse(txtsci.Text, out sci);
-            int.TryParse(txteng.Text, out eng);
-            txtPer.Text = (math + sci + eng).ToString();
-            stud1 = null;
-
-        }
     }
 }
