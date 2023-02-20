@@ -43,6 +43,7 @@ namespace Student_Marksheet
 
         public List<StudentDetails> StudentViewAll() 
         {
+
             return Student1;
         }
     }

@@ -47,6 +47,17 @@ namespace Student_Marksheet
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
+            int math = 0;
+            int sci = 0;
+            int eng = 0;
+            
+            
+            int.TryParse(txtmath.Text, out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            txtPer.Text = stud1.percentage.ToString();
+            stud1 = null;
+
 
         }
 
@@ -62,7 +73,7 @@ namespace Student_Marksheet
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
-
+           
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -82,7 +93,7 @@ namespace Student_Marksheet
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            stud1.rollNum = Convert.ToInt32(txtRollno.Text);
             stud1.maths = Convert.ToInt32(txtmath.Text);
             stud1.science = Convert.ToInt32(txtsci.Text);
             stud1.english = Convert.ToInt32(txteng.Text);
@@ -95,7 +106,9 @@ namespace Student_Marksheet
             {
                 MessageBox.Show("Student Data Not created ");
             }
-
+            txtPer.Text = Math.Round((stud1.percentage),2).ToString();
+            txtTot.Text = stud1.total.ToString();
+            txtGd.Text = stud1.grade;
  
         }
 
@@ -144,6 +157,40 @@ namespace Student_Marksheet
                 Swriter.Close();
                 Fstream.Close();
             }
+        }
+
+        private void btnOD_Click(object sender, EventArgs e)
+        {
+            textOD.Text = " ";
+            foreach (StudentDetails st in Stud2.StudentViewAll()) 
+            {
+                textOD.Text += st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english;
+
+            }
+
+            if (textOD.Text != "") 
+            {
+                MessageBox.Show("Student Details SuccessFully Displayed");
+            }
+            else 
+            {
+                MessageBox.Show("Student Details not available");
+            }
+        }
+
+        private void txtTot_TextChanged(object sender, EventArgs e)
+        {
+            int math = 0;
+            int sci = 0;
+            int eng = 0;
+
+            stud1 = new StudentDetails();
+            int.TryParse(txtmath.Text, out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            txtPer.Text = (math + sci + eng).ToString();
+            stud1 = null;
+
         }
     }
 }
