@@ -13,13 +13,14 @@ namespace Student_Marksheet
 {
     public partial class Form1 : Form
     {
-        StudentDetails stud1 = new StudentDetails();
-        StudentEntry Stud2 = new StudentEntry();
+        
         public Form1()
         {
             InitializeComponent();
         }
-
+        StudentDetails stud1 = new StudentDetails();
+        StudentEntry Stud2 = new StudentEntry();
+        
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -45,22 +46,7 @@ namespace Student_Marksheet
 
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-            int math = 0;
-            int sci = 0;
-            int eng = 0;
-            
-            
-            int.TryParse(txtmath.Text, out math);
-            int.TryParse(txtsci.Text, out sci);
-            int.TryParse(txteng.Text, out eng);
-            txtPer.Text = stud1.percentage.ToString();
-            stud1 = null;
-
-
-        }
-
+      
         private void label6_Click(object sender, EventArgs e)
         {
 
@@ -68,7 +54,50 @@ namespace Student_Marksheet
 
         private void button2_Click(object sender, EventArgs e)
         {
+            FileStream Fstream = new FileStream(@"D:\C#\StudentData.csv", FileMode.OpenOrCreate,FileAccess.Write);
+            StreamWriter Swriter = new StreamWriter(Fstream);
 
+            bool ischecked = false;
+            try 
+            {
+                foreach (StudentDetails st in Stud2.StudentViewAll())
+                {
+                    FileInfo loc = new FileInfo(@"D:\C#\StudentData.csv");
+                    if (loc.Length == 0)
+                    {
+                        Swriter.WriteLine("Student Roll-No" + " | " + "Student Name" + " | " + "Mathematics" + " | " + "Science" + " | " + "English" + " | "+"Percentage" 
+                            + " | "+"Grade" + " | "+"Total");
+                        Swriter.WriteLine(st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
+                        + " | " + st.total);
+                        ischecked = true;
+                    }
+                    else 
+                    {
+                        Swriter.WriteLine(st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
+                        + " | " + st.total);
+                        ischecked = true;
+                    }
+                }    
+                if (ischecked)
+                {
+                    MessageBox.Show("Student Details Successfully Saved in .CSV format");
+                }
+                else
+                {
+                    MessageBox.Show("Student Details Not Found to save in .CSV format");
+                }
+                Swriter.Flush();
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("Error Processing the student data - Data not saved to file" + Environment.NewLine+ex.Message);
+
+            }
+            finally 
+            {
+                Swriter.Close();
+                Fstream.Close();
+            }
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
@@ -93,31 +122,24 @@ namespace Student_Marksheet
 
         private void txtTot_TextChanged(object sender, EventArgs e)
         {
-            int math = 0;
-            int sci = 0;
-            int eng = 0;
-
-            stud1 = new StudentDetails();
-            int.TryParse(txtmath.Text, out math);
-            int.TryParse(txtsci.Text, out sci);
-            int.TryParse(txteng.Text, out eng);
-            txtPer.Text = (math + sci + eng).ToString();
-            stud1 = null;
+            
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            stud1  =  new StudentDetails();
+            
 
             stud1.rollNum = Convert.ToInt32(txtRollno.Text);
             stud1.maths = Convert.ToInt32(txtmath.Text);
             stud1.science = Convert.ToInt32(txtsci.Text);
             stud1.english = Convert.ToInt32(txteng.Text);
             stud1.name = txtname.Text;
-            txtPer.Text = Math.Round((stud1.percentage),2).ToString();
-            txtTot.Text = stud1.total.ToString();
-            txtGd.Text = stud1.grade;
+            textPer.Text = Math.Round(stud1.percentage,2).ToString() + "%";
+            stud1.grade = Stud2.GradeCalculation(stud1.percentage);
+            textGD.Text = Stud2.GradeCalculation(stud1.percentage);
+            textTot.Text = stud1.total.ToString();
+
             if (Stud2.CreateStudent(stud1)) 
             {
                 MessageBox.Show("Student Data Successfully Created");
@@ -144,14 +166,16 @@ namespace Student_Marksheet
                     if (len.Length == 0) 
                     {
                         string fst = "Student Roll-No" + " | " + "Student Name" + " | " + "Mathematics" + " | " + "Science" + " | " + "English";
-                        string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english;
+                        string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " +st.percentage+"%"+ " | " + st.grade
+                    + " | " + st.total;
                         Swriter.WriteLine(fst);
                         Swriter.WriteLine(entry);
                         isSuccess= true;
                     }
                     else 
                     {
-                        string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english;
+                        string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
+                    + " | " + st.total;
 
                         Swriter.WriteLine(entry);
                         isSuccess= true;
@@ -182,7 +206,8 @@ namespace Student_Marksheet
             textOD.Text = " ";
             foreach (StudentDetails st in Stud2.StudentViewAll()) 
             {
-                textOD.Text += st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english;
+                textOD.Text += st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
+                    + " | " + st.total + Environment.NewLine;
 
             }
 
@@ -196,5 +221,14 @@ namespace Student_Marksheet
             }
         }
 
+        private void txtPer_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textTot_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

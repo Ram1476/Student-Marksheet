@@ -46,9 +46,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtPer = new System.Windows.Forms.TextBox();
-            this.txtGd = new System.Windows.Forms.TextBox();
-            this.txtTot = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.btn_TXT = new System.Windows.Forms.Button();
             this.btn_CSV = new System.Windows.Forms.Button();
@@ -62,6 +59,9 @@
             this.btnRes = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.btnOD = new System.Windows.Forms.Button();
+            this.textPer = new System.Windows.Forms.TextBox();
+            this.textGD = new System.Windows.Forms.TextBox();
+            this.textTot = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label2
@@ -264,38 +264,6 @@
             this.label13.TabIndex = 18;
             this.label13.Text = "Total           - ";
             // 
-            // txtPer
-            // 
-            this.txtPer.Location = new System.Drawing.Point(197, 414);
-            this.txtPer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtPer.Multiline = true;
-            this.txtPer.Name = "txtPer";
-            this.txtPer.ReadOnly = true;
-            this.txtPer.Size = new System.Drawing.Size(139, 38);
-            this.txtPer.TabIndex = 19;
-            this.txtPer.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
-            // 
-            // txtGd
-            // 
-            this.txtGd.Location = new System.Drawing.Point(197, 471);
-            this.txtGd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtGd.Multiline = true;
-            this.txtGd.Name = "txtGd";
-            this.txtGd.ReadOnly = true;
-            this.txtGd.Size = new System.Drawing.Size(139, 38);
-            this.txtGd.TabIndex = 20;
-            // 
-            // txtTot
-            // 
-            this.txtTot.Location = new System.Drawing.Point(197, 520);
-            this.txtTot.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTot.Multiline = true;
-            this.txtTot.Name = "txtTot";
-            this.txtTot.ReadOnly = true;
-            this.txtTot.Size = new System.Drawing.Size(139, 38);
-            this.txtTot.TabIndex = 21;
-            this.txtTot.TextChanged += new System.EventHandler(this.txtTot_TextChanged);
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -333,6 +301,7 @@
             // 
             // textOD
             // 
+            this.textOD.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textOD.Location = new System.Drawing.Point(528, 384);
             this.textOD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textOD.Multiline = true;
@@ -443,12 +412,50 @@
             this.btnOD.UseVisualStyleBackColor = true;
             this.btnOD.Click += new System.EventHandler(this.btnOD_Click);
             // 
+            // textPer
+            // 
+            this.textPer.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textPer.Location = new System.Drawing.Point(197, 414);
+            this.textPer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textPer.Multiline = true;
+            this.textPer.Name = "textPer";
+            this.textPer.ReadOnly = true;
+            this.textPer.Size = new System.Drawing.Size(139, 38);
+            this.textPer.TabIndex = 35;
+            this.textPer.TextChanged += new System.EventHandler(this.txtPer_TextChanged);
+            // 
+            // textGD
+            // 
+            this.textGD.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textGD.Location = new System.Drawing.Point(197, 471);
+            this.textGD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textGD.Multiline = true;
+            this.textGD.Name = "textGD";
+            this.textGD.ReadOnly = true;
+            this.textGD.Size = new System.Drawing.Size(139, 38);
+            this.textGD.TabIndex = 36;
+            // 
+            // textTot
+            // 
+            this.textTot.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textTot.Location = new System.Drawing.Point(197, 527);
+            this.textTot.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textTot.Multiline = true;
+            this.textTot.Name = "textTot";
+            this.textTot.ReadOnly = true;
+            this.textTot.Size = new System.Drawing.Size(139, 38);
+            this.textTot.TabIndex = 37;
+            this.textTot.TextChanged += new System.EventHandler(this.textTot_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Bisque;
             this.ClientSize = new System.Drawing.Size(1313, 754);
+            this.Controls.Add(this.textTot);
+            this.Controls.Add(this.textGD);
+            this.Controls.Add(this.textPer);
             this.Controls.Add(this.btnOD);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.btnRes);
@@ -462,9 +469,6 @@
             this.Controls.Add(this.btn_CSV);
             this.Controls.Add(this.btn_TXT);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.txtTot);
-            this.Controls.Add(this.txtGd);
-            this.Controls.Add(this.txtPer);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -513,9 +517,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtPer;
-        private System.Windows.Forms.TextBox txtGd;
-        private System.Windows.Forms.TextBox txtTot;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btn_TXT;
         private System.Windows.Forms.Button btn_CSV;
@@ -529,6 +530,9 @@
         private System.Windows.Forms.Button btnRes;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button btnOD;
+        private System.Windows.Forms.TextBox textPer;
+        private System.Windows.Forms.TextBox textGD;
+        private System.Windows.Forms.TextBox textTot;
     }
 }
 

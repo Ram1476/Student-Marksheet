@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace Student_Marksheet
     {
         public int rollNum, maths, science, english;
         public int total { get { return (maths + science + english); }  }
-        public float percentage { get { return (total / 3.0f); } }
+        public float percentage { get { return (float)Math.Round(total / 3.0f); } }
         public string name;
         public string grade;
         
@@ -19,6 +21,8 @@ namespace Student_Marksheet
     public class StudentEntry
     
     {
+        
+        StudentDetails s1 = new StudentDetails(); 
         private List<StudentDetails> Student1;
         public StudentEntry() 
         {
@@ -45,6 +49,33 @@ namespace Student_Marksheet
         {
 
             return Student1;
+        }
+
+        public string GradeCalculation(float per) 
+        {
+            per = (float)Math.Round(per);
+
+            if (per >= 35 && per < 50)
+            {
+                s1.grade = "C";
+            }
+            else if (per >= 50 && per <= 60)
+            {
+                s1.grade = "B";
+            }
+            else if (per > 60 && per <= 80)
+            {
+                s1.grade = "A";
+            }
+            else if (per > 80 && per <= 100)
+            {
+                s1.grade = "A++";
+            }
+            else
+            {
+                s1.grade = "F";
+            }
+            return s1.grade;
         }
     }
 
