@@ -6,8 +6,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Student_Marksheet
 {
@@ -54,7 +56,7 @@ namespace Student_Marksheet
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FileStream Fstream = new FileStream(@"D:\C#\StudentData.csv", FileMode.OpenOrCreate,FileAccess.Write);
+            FileStream Fstream = new FileStream(@"D:\C#\StudentData.csv", FileMode.Append,FileAccess.Write);
             StreamWriter Swriter = new StreamWriter(Fstream);
 
             bool ischecked = false;
@@ -112,7 +114,15 @@ namespace Student_Marksheet
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-
+            int math = 0, sci = 0, eng = 0 , total = 0;
+           
+            int.TryParse(txtmath.Text, out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            total = math + sci + eng;
+            textTot.Text = (total).ToString();
+            textPer.Text = (Math.Round(total / 3.0f, 2)).ToString()+"%";
+            textGD.Text = Stud2.GradeCalculation(total / 3.0f);
         }
 
         private void label19_Click(object sender, EventArgs e)
@@ -128,27 +138,32 @@ namespace Student_Marksheet
 
         private void button5_Click(object sender, EventArgs e)
         {
-            
-
-            stud1.rollNum = Convert.ToInt32(txtRollno.Text);
-            stud1.maths = Convert.ToInt32(txtmath.Text);
-            stud1.science = Convert.ToInt32(txtsci.Text);
-            stud1.english = Convert.ToInt32(txteng.Text);
-            stud1.name = txtname.Text;
-            textPer.Text = Math.Round(stud1.percentage,2).ToString() + "%";
-            stud1.grade = Stud2.GradeCalculation(stud1.percentage);
-            textGD.Text = Stud2.GradeCalculation(stud1.percentage);
-            textTot.Text = stud1.total.ToString();
-
-            if (Stud2.CreateStudent(stud1)) 
+            try
             {
-                MessageBox.Show("Student Data Successfully Created");
+                stud1 = new StudentDetails();
+                stud1.rollNum = Convert.ToInt32(txtRollno.Text);
+                stud1.maths = Convert.ToInt32(txtmath.Text);
+                stud1.science = Convert.ToInt32(txtsci.Text);
+                stud1.english = Convert.ToInt32(txteng.Text);
+                stud1.name = txtname.Text;
+                textPer.Text = Math.Round(stud1.percentage, 2).ToString()+"%";
+                stud1.grade = Stud2.GradeCalculation(stud1.percentage);
+                textGD.Text = Stud2.GradeCalculation(stud1.percentage);
+                textTot.Text = stud1.total.ToString();
+
+                if (Stud2.CreateStudent(stud1))
+                {
+                    MessageBox.Show("Student Data Successfully Created");
+                }
+                else
+                {
+                    MessageBox.Show("Student Data Not created ");
+                }
             }
-            else 
+            catch (Exception ex) 
             {
-                MessageBox.Show("Student Data Not created ");
+                MessageBox.Show(ex.Message);
             }
-           
  
         }
 
@@ -167,7 +182,7 @@ namespace Student_Marksheet
                     {
                         string fst = "Student Roll-No" + " | " + "Student Name" + " | " + "Mathematics" + " | " + "Science" + " | " + "English";
                         string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " +st.percentage+"%"+ " | " + st.grade
-                    + " | " + st.total;
+                        + " | " + st.total + Environment.NewLine ;
                         Swriter.WriteLine(fst);
                         Swriter.WriteLine(entry);
                         isSuccess= true;
@@ -175,7 +190,7 @@ namespace Student_Marksheet
                     else 
                     {
                         string entry = st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
-                    + " | " + st.total;
+                        + " | " + st.total + Environment.NewLine;
 
                         Swriter.WriteLine(entry);
                         isSuccess= true;
@@ -188,6 +203,7 @@ namespace Student_Marksheet
                     {
                         MessageBox.Show("Student Details Not Found to save in .TXT format");
                     }
+                    Swriter.Flush();
                 }
             }
             catch (Exception ex)
@@ -203,14 +219,18 @@ namespace Student_Marksheet
 
         private void btnOD_Click(object sender, EventArgs e)
         {
-            textOD.Text = " ";
-            foreach (StudentDetails st in Stud2.StudentViewAll()) 
-            {
-                textOD.Text += st.rollNum + " | " + st.name + " | " + st.maths + " | " + st.science + " | " + st.english + " | " + st.percentage + "%" + " | " + st.grade
-                    + " | " + st.total + Environment.NewLine;
-
-            }
-
+            StreamReader rd = new StreamReader(@"D:\C#\StudentData.txt");
+            string sr = " ";
+            string k = " ";
+             while (sr != null) 
+             {
+                sr = rd.ReadLine();
+                if (sr != null && sr!= "")
+                {
+                    k += sr + "\r\n";
+                }
+             }
+             textOD.Text = k;
             if (textOD.Text != "") 
             {
                 MessageBox.Show("Student Details SuccessFully Displayed");
@@ -223,12 +243,98 @@ namespace Student_Marksheet
 
         private void txtPer_TextChanged(object sender, EventArgs e)
         {
-            
+           
         }
 
         private void textTot_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtmath_TextChanged(object sender, EventArgs e)
+       {
+            int math = 0, sci = 0, eng = 0, total = 0;
+           
+            int.TryParse(txtmath.Text,out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            total = math + sci + eng;
+            textTot.Text = (total).ToString();
+            textPer.Text = (Math.Round(total / 3.0f, 2)).ToString()+"%";
+            textGD.Text = Stud2.GradeCalculation(total / 3.0f);
+        }
+
+        private void txtsci_TextChanged(object sender, EventArgs e)
+        {
+            int math = 0, sci = 0, eng = 0, total = 0;
+            int.TryParse(txtmath.Text, out math);
+            int.TryParse(txtsci.Text, out sci);
+            int.TryParse(txteng.Text, out eng);
+            total = math + sci + eng;
+            textTot.Text = (total).ToString();
+            textPer.Text = (Math.Round(total / 3.0f, 2)).ToString()+"%";
+            textGD.Text = Stud2.GradeCalculation(total / 3.0f);
+        }
+
+        private void btn_JSON_Click(object sender, EventArgs e)
+        {
+            bool isCreated = false;
+            try 
+            {
+                string fileName = @"D:\C#\StudentData.json";
+                File.WriteAllText(fileName, JsonSerializer.Serialize(Stud2.StudentViewAll()));
+                isCreated = true;
+                if (isCreated) 
+                {
+                    MessageBox.Show("Student Data Successfully Saved to .Json File");
+                }
+                else 
+                {
+                    MessageBox.Show("Student Date not Successfully Created in .Json File");
+                }
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("Error Processing the Student Data to .Json File"+Environment.NewLine+ex.Message);
+            }
+            finally 
+            {
+            }
+        }
+
+        private void btnLdCSV_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_XML_Click(object sender, EventArgs e)
+        {
+            bool isCreated = false;
+            string fileName = @"D:\C#\StudentData.xml";
+
+            try 
+            {
+                XmlSerializer writer = new XmlSerializer(typeof(List<StudentDetails>), new XmlRootAttribute("ListOfStudents"));
+                using(FileStream file = System.IO.File.Create(fileName)) 
+                {
+                    List<StudentDetails> student1 = new List<StudentDetails>();
+                    writer.Serialize(file, student1);
+
+                }
+                isCreated = true;
+                if (isCreated) 
+                {
+                    MessageBox.Show("Student Data Successfully Saved to .XML File");
+                }
+                else 
+                {
+                    MessageBox.Show("Student Date not Successfully Created in .Json File");
+                }
+            }
+            catch (Exception ex) 
+            { 
+                MessageBox.Show("Error Processing Student Data - File not Saved:" + Environment.NewLine +ex.Message );
+            }
         }
     }
 }

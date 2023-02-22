@@ -62,6 +62,9 @@
             this.textPer = new System.Windows.Forms.TextBox();
             this.textGD = new System.Windows.Forms.TextBox();
             this.textTot = new System.Windows.Forms.TextBox();
+            this.btnLdCSV = new System.Windows.Forms.Button();
+            this.btnLDJS = new System.Windows.Forms.Button();
+            this.btnLDXML = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label2
@@ -175,6 +178,7 @@
             this.txtmath.Name = "txtmath";
             this.txtmath.Size = new System.Drawing.Size(139, 38);
             this.txtmath.TabIndex = 10;
+            this.txtmath.TextChanged += new System.EventHandler(this.txtmath_TextChanged);
             // 
             // label8
             // 
@@ -197,6 +201,7 @@
             this.txtsci.Name = "txtsci";
             this.txtsci.Size = new System.Drawing.Size(139, 38);
             this.txtsci.TabIndex = 12;
+            this.txtsci.TextChanged += new System.EventHandler(this.txtsci_TextChanged);
             // 
             // label9
             // 
@@ -278,10 +283,10 @@
             // btn_TXT
             // 
             this.btn_TXT.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_TXT.Location = new System.Drawing.Point(23, 629);
+            this.btn_TXT.Location = new System.Drawing.Point(528, 618);
             this.btn_TXT.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_TXT.Name = "btn_TXT";
-            this.btn_TXT.Size = new System.Drawing.Size(177, 40);
+            this.btn_TXT.Size = new System.Drawing.Size(155, 40);
             this.btn_TXT.TabIndex = 23;
             this.btn_TXT.Text = "Save as TXT";
             this.btn_TXT.UseVisualStyleBackColor = true;
@@ -290,10 +295,10 @@
             // btn_CSV
             // 
             this.btn_CSV.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CSV.Location = new System.Drawing.Point(267, 629);
+            this.btn_CSV.Location = new System.Drawing.Point(715, 618);
             this.btn_CSV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_CSV.Name = "btn_CSV";
-            this.btn_CSV.Size = new System.Drawing.Size(177, 40);
+            this.btn_CSV.Size = new System.Drawing.Size(158, 40);
             this.btn_CSV.TabIndex = 24;
             this.btn_CSV.Text = "Save as CSV";
             this.btn_CSV.UseVisualStyleBackColor = true;
@@ -306,6 +311,7 @@
             this.textOD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textOD.Multiline = true;
             this.textOD.Name = "textOD";
+            this.textOD.ReadOnly = true;
             this.textOD.Size = new System.Drawing.Size(742, 226);
             this.textOD.TabIndex = 25;
             this.textOD.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
@@ -313,24 +319,26 @@
             // btn_JSON
             // 
             this.btn_JSON.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_JSON.Location = new System.Drawing.Point(507, 629);
+            this.btn_JSON.Location = new System.Drawing.Point(912, 618);
             this.btn_JSON.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_JSON.Name = "btn_JSON";
-            this.btn_JSON.Size = new System.Drawing.Size(204, 40);
+            this.btn_JSON.Size = new System.Drawing.Size(177, 40);
             this.btn_JSON.TabIndex = 26;
             this.btn_JSON.Text = "Save as JSON";
             this.btn_JSON.UseVisualStyleBackColor = true;
+            this.btn_JSON.Click += new System.EventHandler(this.btn_JSON_Click);
             // 
             // btn_XML
             // 
             this.btn_XML.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_XML.Location = new System.Drawing.Point(777, 629);
+            this.btn_XML.Location = new System.Drawing.Point(1113, 618);
             this.btn_XML.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_XML.Name = "btn_XML";
-            this.btn_XML.Size = new System.Drawing.Size(177, 40);
+            this.btn_XML.Size = new System.Drawing.Size(157, 40);
             this.btn_XML.TabIndex = 27;
             this.btn_XML.Text = "Save as XML";
             this.btn_XML.UseVisualStyleBackColor = true;
+            this.btn_XML.Click += new System.EventHandler(this.btn_XML_Click);
             // 
             // label15
             // 
@@ -379,10 +387,10 @@
             // btnRes
             // 
             this.btnRes.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRes.Location = new System.Drawing.Point(410, 701);
+            this.btnRes.Location = new System.Drawing.Point(197, 606);
             this.btnRes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRes.Name = "btnRes";
-            this.btnRes.Size = new System.Drawing.Size(162, 40);
+            this.btnRes.Size = new System.Drawing.Size(139, 40);
             this.btnRes.TabIndex = 32;
             this.btnRes.Text = "Result";
             this.btnRes.UseVisualStyleBackColor = true;
@@ -403,12 +411,12 @@
             // btnOD
             // 
             this.btnOD.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOD.Location = new System.Drawing.Point(688, 701);
+            this.btnOD.Location = new System.Drawing.Point(528, 689);
             this.btnOD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOD.Name = "btnOD";
-            this.btnOD.Size = new System.Drawing.Size(162, 40);
+            this.btnOD.Size = new System.Drawing.Size(158, 40);
             this.btnOD.TabIndex = 34;
-            this.btnOD.Text = "Display";
+            this.btnOD.Text = "Load TXT";
             this.btnOD.UseVisualStyleBackColor = true;
             this.btnOD.Click += new System.EventHandler(this.btnOD_Click);
             // 
@@ -447,12 +455,49 @@
             this.textTot.TabIndex = 37;
             this.textTot.TextChanged += new System.EventHandler(this.textTot_TextChanged);
             // 
+            // btnLdCSV
+            // 
+            this.btnLdCSV.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLdCSV.Location = new System.Drawing.Point(715, 689);
+            this.btnLdCSV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLdCSV.Name = "btnLdCSV";
+            this.btnLdCSV.Size = new System.Drawing.Size(162, 40);
+            this.btnLdCSV.TabIndex = 38;
+            this.btnLdCSV.Text = "Load CSV";
+            this.btnLdCSV.UseVisualStyleBackColor = true;
+            this.btnLdCSV.Click += new System.EventHandler(this.btnLdCSV_Click);
+            // 
+            // btnLDJS
+            // 
+            this.btnLDJS.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLDJS.Location = new System.Drawing.Point(912, 689);
+            this.btnLDJS.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLDJS.Name = "btnLDJS";
+            this.btnLDJS.Size = new System.Drawing.Size(177, 40);
+            this.btnLDJS.TabIndex = 39;
+            this.btnLDJS.Text = "Load JSON";
+            this.btnLDJS.UseVisualStyleBackColor = true;
+            // 
+            // btnLDXML
+            // 
+            this.btnLDXML.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLDXML.Location = new System.Drawing.Point(1113, 689);
+            this.btnLDXML.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLDXML.Name = "btnLDXML";
+            this.btnLDXML.Size = new System.Drawing.Size(157, 40);
+            this.btnLDXML.TabIndex = 40;
+            this.btnLDXML.Text = "Load XML";
+            this.btnLDXML.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Bisque;
             this.ClientSize = new System.Drawing.Size(1313, 754);
+            this.Controls.Add(this.btnLDXML);
+            this.Controls.Add(this.btnLDJS);
+            this.Controls.Add(this.btnLdCSV);
             this.Controls.Add(this.textTot);
             this.Controls.Add(this.textGD);
             this.Controls.Add(this.textPer);
@@ -533,6 +578,9 @@
         private System.Windows.Forms.TextBox textPer;
         private System.Windows.Forms.TextBox textGD;
         private System.Windows.Forms.TextBox textTot;
+        private System.Windows.Forms.Button btnLdCSV;
+        private System.Windows.Forms.Button btnLDJS;
+        private System.Windows.Forms.Button btnLDXML;
     }
 }
 
