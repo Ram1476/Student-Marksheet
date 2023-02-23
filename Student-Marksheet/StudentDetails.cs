@@ -23,7 +23,7 @@ namespace Student_Marksheet
     {
         
         StudentDetails s1 = new StudentDetails(); 
-        private List<StudentDetails> Student1;
+        public List<StudentDetails> Student1;
         public StudentEntry() 
         {
             Student1 = new List<StudentDetails>();
@@ -76,6 +76,18 @@ namespace Student_Marksheet
                 s1.grade = "F";
             }
             return s1.grade;
+        }
+        public StudentDetails ViewStudent(int s) 
+        {
+            StudentDetails student = new StudentDetails();
+            foreach (StudentDetails stud in Student1) 
+            {
+                if (stud.rollNum == s) 
+                {
+                    student = stud;
+                }
+            }
+            return student;
         }
     }
 

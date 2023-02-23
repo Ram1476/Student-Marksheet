@@ -58,11 +58,11 @@ namespace Student_Marksheet
         {
             FileStream Fstream = new FileStream(@"D:\C#\StudentData.csv", FileMode.Append,FileAccess.Write);
             StreamWriter Swriter = new StreamWriter(Fstream);
-
+            int rollno = Convert.ToInt32(txtRollno.Text);
             bool ischecked = false;
             try 
             {
-                foreach (StudentDetails st in Stud2.StudentViewAll())
+                StudentDetails st = Stud2.ViewStudent(rollno);
                 {
                     FileInfo loc = new FileInfo(@"D:\C#\StudentData.csv");
                     if (loc.Length == 0)
@@ -174,10 +174,11 @@ namespace Student_Marksheet
             StreamWriter Swriter = new StreamWriter(Fstream);
             FileInfo len = new FileInfo(path);
             bool isSuccess = false;
+            int rollno = Convert.ToInt32(txtRollno.Text);
             try 
             {
-                foreach (StudentDetails st in Stud2.StudentViewAll()) 
-                {
+                    StudentDetails st =  Stud2.ViewStudent(rollno) ;
+                
                     if (len.Length == 0) 
                     {
                         string fst = "Student Roll-No" + " | " + "Student Name" + " | " + "Mathematics" + " | " + "Science" + " | " + "English";
@@ -204,7 +205,7 @@ namespace Student_Marksheet
                         MessageBox.Show("Student Details Not Found to save in .TXT format");
                     }
                     Swriter.Flush();
-                }
+                
             }
             catch (Exception ex)
             {
@@ -304,7 +305,26 @@ namespace Student_Marksheet
 
         private void btnLdCSV_Click(object sender, EventArgs e)
         {
-
+            StreamReader rd = new StreamReader(@"D:\C#\StudentData.csv");
+            string sr = " ";
+            string k = " ";
+            while (sr != null)
+            {
+                sr = rd.ReadLine();
+                if (sr != null && sr != "")
+                {
+                    k += sr + "\r\n";
+                }
+            }
+            textOD.Text = k;
+            if (textOD.Text != "")
+            {
+                MessageBox.Show("Student Details SuccessFully Displayed");
+            }
+            else
+            {
+                MessageBox.Show("Student Details not available");
+            }
         }
 
         private void btn_XML_Click(object sender, EventArgs e)
