@@ -10,11 +10,14 @@ namespace Student_Marksheet
 {
     public class StudentDetails
     {
-        public int rollNum, maths, science, english;
+        public int rollNum { get; set; }
+        public int maths { get; set; } 
+        public int science { get; set; }
+        public int english { get; set; }
         public int total { get { return (maths + science + english); }  }
         public float percentage { get { return (float)Math.Round(total / 3.0f); } }
-        public string name;
-        public string grade;
+        public string name { get; set; }
+        public string grade { get; set; }
         
     }
 
